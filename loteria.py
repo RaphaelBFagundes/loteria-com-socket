@@ -4,6 +4,8 @@
 #O usuário deve passar os números em que deseja apostar separados por espaço (FEITO)
 #Caso o usuário não defina o range do sorteio, será definido por padrão de 0 a 100 com 5 números sorteados (FEITO)
 
+#OBS: Tratamento de erro - Não pode possuir números repitidos nas aposta
+
 
 #O usuário pode definir a qualquer momento o range da próxima aposta utilizando :X :Y :Z para o range e qtd de números
 #O usuário pode definir a qualquer momento o tamanho da próxima aposta utilizando X Y para os números de desejo
