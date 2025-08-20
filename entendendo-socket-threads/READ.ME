@@ -1,0 +1,52 @@
+Funcionamento Interno (Passo a Passo)
+
+
+server.py
+O servidor é o cérebro da aplicação e utiliza multithreading para lidar com múltiplas tarefas simultaneamente.
+
+Thread Principal: Fica sempre escutando novas conexões de clientes. Quando um cliente se conecta, ela cria uma nova thread para lidar exclusivamente com ele.
+
+Thread 1 (Manipulação do Cliente):
+
+É criada para cada cliente conectado.
+
+Recebe mensagens do cliente de forma contínua.
+
+Analisa a mensagem: Se a mensagem começar com ':', ela é tratada como um comando de configuração. Caso contrário, é tratada como uma aposta.
+
+Armazena as apostas: As apostas válidas são salvas em uma lista chamada apostas_pendentes, juntamente com o endereço do cliente que a enviou.
+
+Thread 2 (Sorteio):
+
+Esta thread é iniciada apenas uma vez no começo do programa e roda em um loop infinito.
+
+Espera por 60 segundos (time.sleep(60)).
+
+Após o tempo, realiza o sorteio com base na última configuração recebida de um cliente.
+
+Verifica as apostas: Percorre a lista de apostas_pendentes e compara cada uma com os números sorteados.
+
+Envia o resultado: Envia uma mensagem com o resultado do sorteio e os números acertados para o cliente correspondente.
+
+Reinicia o ciclo: Limpa a lista de apostas_pendentes para começar a receber novas apostas para o próximo sorteio.
+
+Sincronização com threading.Lock: O lock é usado para evitar problemas de concorrência. Ele garante que a lista de apostas seja acessada por uma thread de cada vez (quando o sorteio está ocorrendo ou quando uma nova aposta está sendo adicionada), prevenindo que dados sejam perdidos ou corrompidos.
+
+
+
+client.py
+O cliente também usa multithreading para ter uma interação fluida com o usuário.
+
+Thread Principal: Inicia a conexão com o servidor.
+
+Thread 1 (send_messages):
+
+É responsável por ler a entrada do teclado do usuário.
+
+Envia a mensagem: Tudo que o usuário digita é enviado para o servidor.
+
+Thread 2 (receive_messages):
+
+Aguarda em um loop infinito por mensagens vindas do servidor.
+
+Quando uma mensagem é recebida, ela a imprime no terminal do usuário.

@@ -28,9 +28,8 @@ print()
 print("-=" * 50)
 print()
 
-tempo_limite = hora_conexao + 60
 
-while hora_conexao < tempo_limite:
+while True:
     # Obtém o range de números ou define o padrão
     try:
         inicio_range_input = input("Digite o range inicial do sorteio (ou pressione Enter para usar 0): ")
