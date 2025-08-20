@@ -4,7 +4,7 @@
 #O usuário deve passar os números em que deseja apostar separados por espaço (FEITO)
 #Caso o usuário não defina o range do sorteio, será definido por padrão de 0 a 100 com 5 números sorteados (FEITO)
 
-#OBS: Tratamento de erro - Não pode possuir números repitidos nas aposta
+#OBS: Tratamento de erro - Não pode possuir números repitidos nas aposta (FEITO)
 
 
 #O usuário pode definir a qualquer momento o range da próxima aposta utilizando :X :Y :Z para o range e qtd de números
@@ -16,7 +16,7 @@
 #pelo usuário. Ao terminar o sorteio, ela verificará se o usuário fez apostas (percorrendo a lista referenciada acima), e
 #verificando se alguma aposta foi sorteada. Após isso, ela enviará o resultado do sorteio ao cliente, e informará quais
 #números ele acertou. A lista será então zerada e um novo ciclo será iniciado.
-
+import time
 from random import sample
 from datetime import datetime
 
@@ -28,7 +28,9 @@ print()
 print("-=" * 50)
 print()
 
-while True:
+tempo_limite = hora_conexao + 60
+
+while hora_conexao < tempo_limite:
     # Obtém o range de números ou define o padrão
     try:
         inicio_range_input = input("Digite o range inicial do sorteio (ou pressione Enter para usar 0): ")
@@ -74,6 +76,11 @@ while True:
         # Verifica se a quantidade de números apostados é a correta
         if len(aposta_usuario) != qtd_numeros:
             print(f"Atenção: Você deve digitar exatamente {qtd_numeros} números. Tente novamente.")
+            continue
+
+        # Verifica se a aposta contém números repetidos
+        if len(aposta_usuario) != len(set(aposta_usuario)):
+            print("Atenção: Você não pode apostar no mesmo número mais de uma vez. Tente novamente.")
             continue
 
         # Verifica se os números da aposta estão dentro do range definido
